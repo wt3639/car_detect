@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "car_detec", "car_detec\car_detec.vcxproj", "{16355DF4-A308-411A-9FE3-93B23280888E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16355DF4-A308-411A-9FE3-93B23280888E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16355DF4-A308-411A-9FE3-93B23280888E}.Debug|Win32.Build.0 = Debug|Win32
+		{16355DF4-A308-411A-9FE3-93B23280888E}.Release|Win32.ActiveCfg = Release|Win32
+		{16355DF4-A308-411A-9FE3-93B23280888E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
