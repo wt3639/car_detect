@@ -54,23 +54,7 @@ void detec_and_draw(IplImage * img)
 	return;
 }
 
-IplImage* backgroundminus(IplImage *cap){
-	BackgroundSubtractorMOG2  mog;
-	Mat foreground;
-	Mat background;
-	
-	// 运动前景检测，并更新背景
-		mog(cap, foreground, 0.001);
 
-		// 腐蚀
-		cv::erode(foreground, foreground, cv::Mat());
-	
-		// 膨胀
-		cv::dilate(foreground, foreground, cv::Mat());
-
-		mog.getBackgroundImage(background);   // 返回当前背景图像
-
-}
 
 int main(int argc, char** argv)
 {
@@ -83,45 +67,73 @@ int main(int argc, char** argv)
 	//imshow("grey_src",img);
 	//waitKey(6000);  
 	*/
-	
-	CvCapture* capture = cvCaptureFromAVI("E:\\car3.avi");
+	VideoCapture video("E:\\car3.avi");
+	//CvCapture* capture = cvCaptureFromAVI("E:\\car3.avi");
 	//IplImage * src = cvLoadImage("E:\\test1.jpg");
-	IplImage *temp=NULL;
-	temp = cvQueryFrame(capture);
+	Mat frame,grey_src;
+	Mat foreground;
+	Mat background;
+	//IplImage* iplimg;
+	//IplImage *temp=NULL;
+	//temp = cvQueryFrame(capture);
+	video>>frame;
+	BackgroundSubtractorMOG2  mog; 
+	/*
 	CvSize size = cvGetSize(temp);
 	int chan = temp->nChannels;
 	int depth = temp->depth;
-	
+	*/
 	/*
 	CvSize size = cvGetSize(src);
 	int chan = src->nChannels;
 	int depth = src->depth;
 	*/
-	
+	/*
 	IplImage * src = cvCreateImage(size,depth,chan);
 	cvZero(src);
 	IplImage * grey_src = cvCreateImage(size,depth,1);
 	cvZero(grey_src);
+	*/
 	namedWindow("grey_src",CV_WINDOW_AUTOSIZE);
-
+	//IplImage * bg_src = cvCreateImage(size,depth,1);
+	//cvZero(bg_src);
+	//namedWindow("bg_src",CV_WINDOW_AUTOSIZE);
 	int frameNum =1;
 	int start = 100;
 	while(1){
-		temp = cvQueryFrame(capture);
+		video>>frame;
 		frameNum++;
 		
 		//if(frameNum == start)
 		//{
-			cvCopy(temp,src,NULL);
+			//cvCopy(temp,src,NULL);
 
-			cvCvtColor(src,grey_src,CV_BGR2GRAY);
+			cvtColor(frame,grey_src,CV_BGR2GRAY);
 			//Mat m(grey_src,true);
 			//imshow("grey_src",m);
-			cvShowImage("grey_src",grey_src);
+			imshow("grey_src",grey_src);
 			//mog(capture, foreground, 0.001);
+			//backgroundminus(grey_src,bg_src);
+			
+	
+	//Mat frame(cap);
+	// 运动前景检测，并更新背景
+		mog(frame, foreground, 0.001);
 
-			detec_and_draw(grey_src);
-			cvWaitKey(10);  
+		// 腐蚀
+		erode(foreground, foreground, Mat());
+	
+		// 膨胀
+		dilate(foreground, foreground, Mat());
+
+		mog.getBackgroundImage(background);   // 返回当前背景图像
+		//IplImage* iplimg=NULL;
+		//namedWindow("bb_src",CV_WINDOW_AUTOSIZE);
+		//imshow("bb_src",foreground);
+		IplImage imgTmp = foreground;
+        IplImage *input =cvCloneImage(&imgTmp);
+		detec_and_draw(input);
+		cvWaitKey(10);  
 		//	break;
 		//}
 		
